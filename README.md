@@ -23,9 +23,16 @@ A web application that uses AI (Google Gemini 1.5 Flash) to optimize Amazon prod
 ```
 .
 ├── backend/
-│   ├── server.js          # Express server with API routes
-│   ├── package.json
-│   └── .env    # Environment variables template
+│   ├── api/
+│   ├── product/
+│   │     └── [asin].js
+│   └── optimize.js
+│
+|   ├── db.js
+|   ├── scraper.js
+|   ├── gemini.js
+|   ├── package.json
+|   └── .env  
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
@@ -39,6 +46,7 @@ A web application that uses AI (Google Gemini 1.5 Flash) to optimize Amazon prod
 │   │   └── index.js
 │   ├── public/
 │   └── package.json
+|   ├── .env.local
 └── README.md
 ```
 
