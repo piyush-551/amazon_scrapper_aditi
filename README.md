@@ -55,7 +55,7 @@ A web application that uses AI (Google Gemini 1.5 Flash) to optimize Amazon prod
 ### Prerequisites
 
 - Node.js (v14 or higher)
-- PostgreSQL (v12 or higher)
+- MySQL
 - Google Gemini API key
 
 ### Backend Setup
