@@ -1,5 +1,5 @@
-import { getDB } from "../../../db";
-import { scrapeAmazonProduct } from "../../../scraper";
+import { getDB } from "../../db.js";
+import { scrapeAmazonProduct } from "../../scraper.js";
 
 export default async function handler(req, res) {
   const { asin } = req.query;
