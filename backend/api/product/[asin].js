@@ -2,6 +2,7 @@ import { getDB } from "../../db.js";
 import { scrapeAmazonProduct } from "../../scraper.js";
 
 export default async function handler(req, res) {
+  console.log('entered product handler');
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -12,7 +13,8 @@ export default async function handler(req, res) {
     res.status(200).end(); // Must end the response
     return;
   }
-  const { asin } = req.query;
+  const asin = req.query.asin || req.params?.asin;
+  console.log('asin', asin);
 
   try {
     const pool = await getDB();
@@ -23,10 +25,14 @@ export default async function handler(req, res) {
       [asin]
     );
 
+    console.log('original', original);
+
     const [optimized] = await conn.query(
       "SELECT * FROM optimized_listings WHERE asin = ?",
       [asin]
     );
+
+    console.log('optimized', optimized);
 
     conn.release();
 
