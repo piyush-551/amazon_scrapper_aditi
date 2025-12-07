@@ -25,7 +25,7 @@ A web application that uses AI (Google Gemini 1.5 Flash) to optimize Amazon prod
 ├── backend/
 │   ├── server.js          # Express server with API routes
 │   ├── package.json
-│   └── .env.example       # Environment variables template
+│   └── .env    # Environment variables template
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
