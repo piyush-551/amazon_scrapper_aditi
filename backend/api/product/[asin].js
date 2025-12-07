@@ -2,6 +2,16 @@ import { getDB } from "../../db.js";
 import { scrapeAmazonProduct } from "../../scraper.js";
 
 export default async function handler(req, res) {
+  // CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end(); // Must end the response
+    return;
+  }
   const { asin } = req.query;
 
   try {
