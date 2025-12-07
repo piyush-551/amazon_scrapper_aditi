@@ -1,5 +1,5 @@
 import axios from "axios";
-import cheerio from "cheerio";
+import { load } from "cheerio";
 
 export async function scrapeAmazonProduct(asin) {
   const amazonUrl = `https://www.amazon.com/dp/${asin}`;
@@ -12,7 +12,7 @@ export async function scrapeAmazonProduct(asin) {
     },
   });
 
-  const $ = cheerio.load(response.data);
+  const $ = load(response.data);
 
   const title =
     $("#productTitle").text().trim() ||
