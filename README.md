@@ -1,21 +1,21 @@
 # Amazon Product Listing Optimizer
 
-A web application that uses AI (Google Gemini 1.5 Flash) to optimize Amazon product listings by improving titles, bullet points, descriptions, and suggesting relevant keywords.
+A web application that uses AI (Google Gemini 2.5 Flash) to optimize Amazon product listings by improving titles, bullet points, descriptions, and suggesting relevant keywords.
 
 ## Features
 
 - **Product Fetching**: Enter an Amazon ASIN to automatically fetch product details (title, bullet points, description) from Amazon's product page
-- **AI Optimization**: Uses Google Gemini 1.5 Flash to generate optimized, keyword-rich content that's both readable and compliant with Amazon's guidelines
+- **AI Optimization**: Uses Google Gemini 2.5 Flash to generate optimized, keyword-rich content that's both readable and compliant with Amazon's guidelines
 - **Side-by-Side Comparison**: View original and optimized versions side-by-side for easy comparison
-- **History Tracking**: All fetched and optimized data is stored in PostgreSQL database for tracking improvements over time
+- **History Tracking**: All fetched and optimized data is stored in MySQL database for tracking improvements over time
 - **Clean UI**: Simple, Amazon-style interface with clean spacing and intuitive design
 
 ## Tech Stack
 
 - **Backend**: Node.js + Express
 - **Frontend**: React
-- **Database**: PostgreSQL
-- **AI**: Google Gemini 1.5 Flash API
+- **Database**: MySQL
+- **AI**: Google Gemini 2.5 Flash API
 - **Scraping**: Cheerio + Axios
 
 ## Project Structure
@@ -31,6 +31,7 @@ A web application that uses AI (Google Gemini 1.5 Flash) to optimize Amazon prod
 |   ├── db.js
 |   ├── scraper.js
 |   ├── gemini.js
+|   ├── local-server.js
 |   ├── package.json
 |   └── .env  
 ├── frontend/
@@ -78,15 +79,16 @@ cp .env.example .env
 4. Update `.env` with your credentials:
 ```
 GEMINI_API_KEY=your_gemini_api_key_here
-DB_HOST=localhost
-DB_USER=postgres
-DB_PASSWORD=your_postgres_password
+SCRAPPER_API_KEY=your_gemini_api_key_here
+DB_HOST=your_database_host(cloud) / localhost
+DB_USER=database_user(cloud) / root
+DB_PASSWORD=your_database_password
 DB_NAME=amazon_ai
-DB_PORT=5432
+DB_PORT=3306
 PORT=5000
 ```
 
-5. Make sure PostgreSQL is running and create the database (the app will create tables automatically):
+5. Make sure MySQL is running and create the database (the app will create tables automatically):
 ```sql
 CREATE DATABASE amazon_ai;
 ```
@@ -204,9 +206,9 @@ Optimizes product listing using AI.
 User enters an ASIN in the search bar and clicks "Search".
 
 ### Step 2: Backend Processing
-- Backend checks PostgreSQL database for existing data
+- Backend checks database for existing data
 - If found → returns stored original + optimized data
-- If not found → scrapes Amazon product page using Cheerio
+- If not found → scrapes Amazon product page using Cheerio and scrapper api
 - Saves original data to database
 - Returns original data to frontend
 
@@ -219,7 +221,7 @@ User enters an ASIN in the search bar and clicks "Search".
 - Frontend sends data to backend
 - Backend calls Gemini API with optimized prompt
 - AI generates improved title, bullet points, description, and keywords
-- Backend saves both original and optimized data to PostgreSQL
+- Backend saves both original and optimized data to database
 - Returns optimized data to frontend
 
 ### Step 5: Comparison View
@@ -232,7 +234,7 @@ The application uses a carefully crafted prompt that instructs GPT-4 to:
 1. **Optimize titles** to be keyword-rich while maintaining readability (under 200 characters)
 2. **Rewrite bullet points** to be clear, concise, and compelling (5-7 points)
 3. **Enhance descriptions** to be persuasive yet compliant with Amazon's guidelines
-4. **Suggest keywords** that are relevant and searchable (3-5 keywords)
+4. **Suggest keywords** that are relevant and searchable 
 
 The prompt emphasizes:
 - Keyword optimization without keyword stuffing
@@ -259,14 +261,14 @@ Amazon may block requests. If scraping fails:
 - Amazon may have rate limiting or bot detection
 
 ### Database Connection Issues
-- Ensure PostgreSQL is running
+- Ensure MySQL is running
 - Verify database credentials in `.env`
 - Check that the database `amazon_ai` exists (create it manually: `CREATE DATABASE amazon_ai;`)
 
 ### Gemini API Issues
 - Verify your API key is correct in `.env`
 - Check your Google AI Studio account has sufficient quota
-- Ensure you have access to Gemini 1.5 Flash model
+- Ensure you have access to Gemini 2.5 Flash model
 
 ## Future Enhancements
 
