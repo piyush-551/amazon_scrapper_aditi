@@ -15,6 +15,8 @@ function App() {
   const [error, setError] = useState(null);
   const [optimizing, setOptimizing] = useState(false);
 
+  const BASE_URL = process.env.REACT_APP_API_BASE_URL; 
+
   const handleSearch = async (searchAsin) => {
     if (!searchAsin.trim()) {
       setError('Please enter a valid ASIN');
@@ -27,7 +29,7 @@ function App() {
     setOptimizedData(null);
 
     try {
-      const response = await axios.get(`/api/product/${searchAsin.trim()}`);
+      const response = await axios.get(`${BASE_URL}/api/product/${searchAsin.trim()}`);
       setOriginalData(response.data.original);
       setOptimizedData(response.data.optimized);
       setAsin(searchAsin.trim());
@@ -45,7 +47,7 @@ function App() {
     setError(null);
 
     try {
-      const response = await axios.post('/api/optimize', {
+      const response = await axios.post(`${BASE_URL}/api/optimize`, {
         asin: asin,
         title: formData.title,
         bullets: formData.bullets,
